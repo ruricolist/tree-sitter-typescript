@@ -54,6 +54,9 @@ module.exports = function defineGrammar(dialect) {
       [$._type_query_call_expression, $.primary_expression],
       [$.type_query, $.primary_expression],
       [$.override_modifier, $.primary_expression],
+      [$.decorator_call_expression, $.decorator],
+      [$.literal_type, $.pattern],
+      [$.predefined_type, $.pattern]
     ]),
 
     conflicts: ($, previous) => previous.concat([
@@ -62,6 +65,8 @@ module.exports = function defineGrammar(dialect) {
       [$.call_expression, $.binary_expression, $.update_expression],
       [$.call_expression, $.binary_expression, $.type_assertion],
       [$.call_expression, $.binary_expression, $.await_expression],
+
+      [$.class], // TODO
 
       [$.nested_identifier, $.nested_type_identifier, $.primary_expression],
       [$.nested_identifier, $.nested_type_identifier],
@@ -84,6 +89,9 @@ module.exports = function defineGrammar(dialect) {
       [$.primary_expression, $._parameter_name, $._primary_type],
       [$.primary_expression, $._parameter_name, $.array_type, $.tuple_type],
       [$.primary_expression, $.literal_type],
+      [$.primary_expression, $.literal_type, $.pattern],
+      [$.primary_expression, $.literal_type, $.rest_pattern],
+      [$.primary_expression, $.predefined_type, $.rest_pattern],
       [$.primary_expression, $._primary_type],
       [$.primary_expression, $.generic_type],
       [$.primary_expression, $.predefined_type],
@@ -113,7 +121,7 @@ module.exports = function defineGrammar(dialect) {
       [$.array, $.array_pattern, $.tuple_type],
       [$.array_pattern, $.tuple_type],
 
-      [$.template_literal_type, $.template_string]
+      [$.template_literal_type, $.template_string],
     ]),
 
     inline: ($, previous) => previous
